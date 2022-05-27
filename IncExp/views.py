@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from IncExp.forms import RegistrationForm
+from IncExp.models import Booking
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -28,3 +29,9 @@ class RegisterView(CreateView):
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "IncExp\dashboard.html"
     login_url = 'login'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['booking_list'] = Booking.objects.filter(user=self.request.user)
+        return context
+
