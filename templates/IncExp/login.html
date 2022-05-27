@@ -1,0 +1,47 @@
+{% extends "IncExp/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Login{% endblock %}
+{% block content %}
+        <h1 class="text-2xl pb-4 font-bold text-center">Login</h1>
+        {% if user.is_authenticated %}
+            <div class="flex justify-center flex-row">Already logged in</div>
+        {% else %}
+        {% if exception  %}
+            <div class="flex justify-center flex-row pb-2">
+                <p class="text-red-800">Error: {{ exception }}</p>
+            </div>
+        {% endif %}
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="flex justify-center flex-row pb-2">
+                <div>{{ form.username|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:Username" }}</div>
+            </div>
+            {% if form.username.errors %}
+                <div class="flex justify-center flex-row pb-2">
+                    {% for error in form.username.errors %}
+                        <div class="text-red-800">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="flex justify-center flex-row pb-4">
+                <div>{{ form.password|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:Password" }}</div>
+            </div>
+            {% if form.password.errors %}
+                <div class="flex justify-center flex-row pb-2">
+                    {% for error in form.password.errors %}
+                        <div class="text-red-800">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="flex justify-center flex-row">
+                <input class="bg-sky-400 rounded-md px-3 py-2 hover:font-bold" type="submit" value="Login">
+            </div>
+        </form>
+        <br>
+        {% endif %}
+        <div class="text-center">
+            <a href="{% url 'register' %}" class="text-indigo-800 text-xs hover:font-bold">Register first if you have no account yet</a>
+        </div>
+
+
+{% endblock %}

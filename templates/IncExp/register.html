@@ -1,0 +1,61 @@
+{% extends "IncExp/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <h1 class="text-2xl pb-4 font-bold text-center">Register</h1>
+    {% if error %}
+        <div class="flex justify-center flex-row pb-2">
+            <p class="text-red-800">Error: {{ error }}</p>
+        </div>
+    {% endif %}
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="flex justify-center flex-row pb-2">
+            {{ form.username|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:Username" }}
+        </div>
+        {% if form.username.errors %}
+            <div class="flex justify-center flex-row pb-2">
+                {% for error in form.username.errors %}
+                    <div class="text-red-800">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="flex justify-center flex-row pb-2">
+            {{ form.email|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:E-Mail" }}
+        </div>
+        {% if form.email.errors %}
+            <div class="flex justify-center flex-row pb-2">
+                {% for error in form.email.errors %}
+                    <div class="text-red-800">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="flex justify-center flex-row pb-2">
+            {{ form.password1|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:Password" }}
+        </div>
+        {% if form.password1.errors %}
+            <div class="flex justify-center flex-row pb-2">
+                {% for error in form.password1.errors %}
+                    <div class="text-red-800">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="flex justify-center flex-row pb-2">
+            {{ form.password2|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:Repeat Password" }}
+        </div>
+        {% if form.password2.errors %}
+            <div class="flex justify-center flex-row pb-2">
+                {% for error in form.password2.errors %}
+                    <div class="text-red-800">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="flex justify-center flex-row">
+            <input class="bg-sky-400 rounded-md px-3 py-2 hover:font-bold" type="submit" value="Register">
+        </div>
+    </form>
+    <br>
+    <div class="text-center">
+        <a href="{% url 'login' %}" class="text-indigo-800 text-xs hover:font-bold">Already Registered? Go to Login.</a>
+    </div>
+{% endblock %}

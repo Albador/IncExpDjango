@@ -1,0 +1,10 @@
+{% extends "IncExp/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <h1 class="text-2xl pb-4 font-bold text-center">Dashboard</h1>
+    {% if user.is_authenticated %}
+        <div class="flex flex-row">Hallo {{ user.username }}</div>
+    {% endif %}
+    <br>
+    <a href="{% url 'logout' %}" class="text-indigo-800 text-xs hover:font-bold">Logout</a>
+{% endblock %}
