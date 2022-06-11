@@ -1,24 +1,26 @@
+
 {% extends "IncExp/base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
     <h1 class="text-gray-800 text-2xl pb-4 font-bold text-center">Dashboard</h1>
     {% if user.is_authenticated %}
-        <table class="text-gray-800 w-full text-left">
-        <thead class="">
-            <th>ID</th>
-            <th>Description</th>
-            <th>Value</th>
-            <th>Date</th>
-        </thead>
-        {% for booking in booking_list %}
-            <tr class="border-b border-slate-200">
-                <td>{{ booking.id }}</td>
-                <td>{{ booking.short_description }}</td>
-                <td>{{ booking.value }}</td>
-                <td>{{ booking.date|date:"d.m.Y" }}</td>
-            </tr>
-        {% endfor %}
-        </table>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="bg-sky-50 p-2 rounded-md col-span-1 row-span-1 gap-4">
+                <div hx-get="{% url 'createbooking' %}" hx-trigger="load" class="bg-sky-50">
+                </div>
+            </div>
+            <div class="col-span-2">
+                    <div class="grid grid-cols-1 p-2 bg-sky-50 rounded-md gap-4">
+                        {% for booking in booking_list %}
+                        <div class="bg-sky-200 rounded-md p-2">
+                            <p># {{ booking.id }} - {{ booking.short_description }} - {{ booking.date|date:"d.m.Y" }}</p>
+                            <p>{{ booking.value }} {{ booking.currency }}</p>
+                        </div>
+                        {% endfor %}
+                        <div class="bg-sky-200 rounded-md p-2"><p>Summe</p>{{ booking_list_sum.value__sum|floatformat:2 }}</div>
+                    </div>
+            </div>
+        </div>
     {% endif %}
     <br>
     <a href="{% url 'logout' %}" class="text-indigo-800 text-xs hover:font-bold">Logout</a>

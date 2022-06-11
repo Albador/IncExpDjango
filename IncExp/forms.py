@@ -1,6 +1,12 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+from IncExp.models import Booking
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 
 class RegistrationForm(UserCreationForm):
@@ -23,3 +29,12 @@ class RegistrationForm(UserCreationForm):
             'password1',
             'password2',
         ]
+
+
+class BookingForm(ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['description', 'value', 'currency', 'date']
+        widgets = {
+            'date': DateInput(),
+        }

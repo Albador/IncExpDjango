@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from IncExp.views import IndexView, MyLoginView, LogoutView, DashboardView, RegisterView
+from IncExp.views import IndexView, MyLoginView, LogoutView, DashboardView, RegisterView, CreateBookingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('register/', RegisterView.as_view(), name='register'),
+    path('widgets/createbooking', CreateBookingView.as_view(), name='createbooking'),
 ]

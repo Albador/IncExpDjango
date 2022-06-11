@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+<form method="POST" action="{% url 'createbooking' %}">
+    {% csrf_token %}
+    <div class="flex justify-center flex-row pb-2">
+        <div>{{ form.description|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:description" }}</div>
+    </div>
+    <div class="flex justify-center flex-row pb-2">
+        <div>{{ form.value|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:value" }}</div>
+    </div>
+    <div class="flex justify-center flex-row pb-2">
+        <div>{{ form.currency|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:currency" }}</div>
+    </div>
+    <div class="flex justify-center flex-row pb-2">
+        <div>{{ form.date|add_class:"border-2 rounded-md px-3 py-1"|attr:"placeholder:date" }}</div>
+    </div>
+    <div class="flex justify-center flex-row">
+        <input class="bg-sky-400 rounded-md px-3 py-2 hover:font-bold" type="submit" value="Neuer Eintrag">
+    </div>
+</form>
