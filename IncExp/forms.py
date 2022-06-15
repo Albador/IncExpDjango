@@ -5,10 +5,6 @@ from django.contrib.auth import get_user_model
 from IncExp.models import Booking
 
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
-
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Enter a valid email address')
 
@@ -36,5 +32,5 @@ class BookingForm(ModelForm):
         model = Booking
         fields = ['description', 'value', 'currency', 'date']
         widgets = {
-            'date': DateInput(),
+            'date': forms.DateInput(format='%d-%m-%Y', attrs={'class': 'datepicker', 'placeholder': 'Select a date', 'type': 'date'}),
         }

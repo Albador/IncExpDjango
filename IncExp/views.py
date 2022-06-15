@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView
+from django.views.generic.detail import BaseDetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from IncExp.forms import RegistrationForm, BookingForm
@@ -7,6 +9,7 @@ from IncExp.models import Booking
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db.models import Sum
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -47,3 +50,18 @@ class CreateBookingView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class DeleteBookingView(LoginRequiredMixin, BaseDetailView):
+    http_method_names = ['delete']
+    model = Booking
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == self.request.user:
+            self.object.delete()
+            response = redirect(reverse_lazy('dashboard'))
+            response.status_code = 200
+            return response
+        else:
+            raise PermissionDenied()
